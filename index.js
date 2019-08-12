@@ -196,6 +196,21 @@ app.post('/payslip',function(req,res){
 
   var mongoClient = require("mongodb").MongoClient;
   mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
+
+
+    const db = client.db(config.MONGO_DB_NAME);
+    var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094",Period:"July"});
+    cursor.each(function(err, doc) {
+      console.log("LOGGIT >>> Cursor hit");
+      
+      if (doc != null) {
+          console.log("LOGGIT >>> " + JSON.stringify(doc));
+      } else {
+        console.log("LOGGIT >>> Doc is null");
+      }
+    });
+
+
     client.close();
     console.log("LOGGIT >>> Mongo connected ok...");
     res.send({
