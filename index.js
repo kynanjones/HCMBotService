@@ -195,8 +195,8 @@ app.post('/wflist',function(req,res){
 app.post('/payslip',function(req,res){            
 
   var mongoClient = require("mongodb").MongoClient;
-  mongoClient.connect(config.MONGO_CONN_STRING, function (err, db) {
-
+  mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
+    client.close();
     console.log("LOGGIT >>> Mongo connected ok...");
     res.send({
       replies:
@@ -207,8 +207,6 @@ app.post('/payslip',function(req,res){
         }
       ]
     });
-
-    db.close();
 
   });
 
