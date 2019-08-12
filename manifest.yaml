@@ -1,0 +1,5 @@
+applications:
+- name: hcm-bot
+  host: hcm-i301256
+  memory: 128M
+  timeout: 180
