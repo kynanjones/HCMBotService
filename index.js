@@ -5,7 +5,7 @@ const http = require('http');
 const axios = require('axios');
 const config = require('./config.js');
 var   Redis = require('ioredis');
-var mongoClient = require("mongodb").MongoClient;
+
 
 
 
@@ -194,9 +194,19 @@ app.post('/wflist',function(req,res){
 //Get a list of my documents
 app.post('/payslip',function(req,res){            
 
+  var mongoClient = require("mongodb").MongoClient;
   mongoClient.connect(config.MONGO_CONN_STRING, function (err, db) {
 
     console.log("LOGGIT >>> Mongo connected ok...");
+    res.send({
+      replies:
+      [
+        {
+          type: 'text',
+          content: "Your payslips have been found"
+        }
+      ]
+    });
 
     db.close();
 
