@@ -192,9 +192,7 @@ app.post('/wflist',function(req,res){
 });
 
 //Get a list of my documents
-app.post('/payslip',function(req,res){
-
-  var EmpNo = req.body.conversation.memory.EmployeeNumber.value;              
+app.post('/payslip',function(req,res){            
 
   mongoClient.connect(config.MONGO_CONN_STRING, function (err, db) {
 
