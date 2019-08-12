@@ -5,10 +5,14 @@ const http = require('http');
 const axios = require('axios');
 const config = require('./config.js');
 var   Redis = require('ioredis');
+var mongoClient = require("mongodb").MongoClient;
+
+
+
 //SAP OData Service Utilities
 const LeaveBalanceLookup = require('./LeaveBalanceLookup.js');
 const app = express();
-var path    = require("path");
+var path  = require("path");
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -90,7 +94,7 @@ app.post('/wflist',function(req,res){
   axios.get(SF_WF_URL,{headers: {"Authorization" : "Basic " + auth}})
     .then(response => {
       console.log("LOGGIT >>> Response returned without error");
-      console.log("LOGGIT >>> " + response.data.d.results[0]);
+      console.log("LOGGIT >>> " + JSON.stringify(response));
       for (var i in response.data.d.results) {
 
         console.log("LOGGIT >>> " + "WfRequest found");
@@ -116,7 +120,6 @@ app.post('/wflist',function(req,res){
               }else{
                 name = wfRequestTodoResults.categoryLabel;
               }
-
 
               wfListElements.push(
                 {
@@ -193,11 +196,19 @@ app.post('/docList',function(req,res){
 
   var EmpNo = req.body.conversation.memory.EmployeeNumber.value;              
 
-  redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
+  mongoClient.connect(config.MONGO_CONN_STRING, function (err, db) {
 
-  redis.get("myScript", function(err, result) {
-    console.log(result);
+    console.log("LOGGIT >>> Mongo connected ok...");
+
+    db.close();
+    
   });
+
+  // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
+
+  // redis.get("myScript", function(err, result) {
+  //   console.log(result);
+  // });
 
 });
 
