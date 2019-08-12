@@ -47,7 +47,7 @@ app.post('/leave',function(req,res){
       console.log("LOGGIT >>> Response returned without error");
       console.log("LOGGIT >>> " + response.data.d.results[0]);
       for (var i in response.data.d.results) {
-
+   
         console.log("LOGGIT >>> " + "Leave Record found");
 
         var LeaveRecord = response.data.d.results[i];
