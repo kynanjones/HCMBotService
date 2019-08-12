@@ -32,8 +32,6 @@ app.post('/leave',function(req,res){
 
   console.log("LOGGIT >>> Memory = " + JSON.stringify(req.body.conversation.memory));
 
-  //console.log("LOGGIT >>> " + req.body.conversation.memory.EmployeeNumber.value);
-
   //var LeaveRecord = LeaveBalanceLookup(req,res);
   var auth = Buffer.from(config.USERNAME + ":" + config.PASSWORD).toString('base64');
   var EmpNo = req.body.conversation.memory.EmployeeNumber.value;
@@ -206,6 +204,16 @@ app.post('/docList',function(req,res){
 app.post('/createleave',function(req,res){
 
   console.log("LOGGIT >>> Create Leave Called");
+
+  res.send({
+              replies:
+              [
+                {
+                  type: 'text',
+                  content: "Your leave request has been submitted for approval."
+                }
+              ]
+            });
 
   // console.log(req.body.conversation.memory);
   //
