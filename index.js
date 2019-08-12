@@ -192,7 +192,7 @@ app.post('/wflist',function(req,res){
 });
 
 //Get a list of my documents
-app.post('/docList',function(req,res){
+app.post('/payslip',function(req,res){
 
   var EmpNo = req.body.conversation.memory.EmployeeNumber.value;              
 
@@ -201,7 +201,7 @@ app.post('/docList',function(req,res){
     console.log("LOGGIT >>> Mongo connected ok...");
 
     db.close();
-    
+
   });
 
   // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
