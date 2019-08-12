@@ -7,7 +7,6 @@ const config = require('./config.js');
 var   Redis = require('ioredis');
 //SAP OData Service Utilities
 const LeaveBalanceLookup = require('./LeaveBalanceLookup.js');
-//test
 const app = express();
 var path    = require("path");
 
