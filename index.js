@@ -224,21 +224,27 @@ app.post('/payslip',function(req,res){
       } else {
         console.log("LOGGIT >>> Doc is null");
       }
-    });
 
+    });
 
     client.close();
-    
-    res.send({
-      replies:
-      [
-        {
-          type: 'List',
-          content: { elements: payslipList }
-        }
-      ]
-    });
 
+    
+    
+    
+
+  });
+
+  console.log("LOGGIT >>> Response sent as : " + JSON.stringify(payslipList));
+
+  res.send({
+    replies:
+    [
+      {
+        type: 'List',
+        content: { elements: payslipList }
+      }
+    ]
   });
 
   // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
