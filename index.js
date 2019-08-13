@@ -195,57 +195,77 @@ app.post('/wflist',function(req,res){
 app.post('/payslip',function(req,res){            
   var payslipList = [];
   var mongoClient = require("mongodb").MongoClient;
-  mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
+  var async = require("async");
+
+  async.series([
+    function(callback) {
+        // do some stuff ...
+        mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
 
 
-    const db = client.db(config.MONGO_DB_NAME);
-    var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094",Period:"July"});
-    cursor.each(function(err, doc) {
-      console.log("LOGGIT >>> Cursor hit");
+          const db = client.db(config.MONGO_DB_NAME);
+          var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094"});
+          cursor.each(function(err, doc) {
+            console.log("LOGGIT >>> Cursor hit");
+            
+            if (doc != null) {
+                console.log("LOGGIT >>> " + JSON.stringify(doc));
       
-      if (doc != null) {
-          console.log("LOGGIT >>> " + JSON.stringify(doc));
-
-          //We have the record, now we can get the Filename (URL to Blob Storage) and pass it back to the Bot
-
-          payslipList.push({
-            "title": doc.Period,
-            "subtitle": doc.Year,
-            "buttons": [
-              {
-                "title": "View Payslip",
-                "type": "web_url",
-                "value": doc.Filename
-              }
-            ]
+                //We have the record, now we can get the Filename (URL to Blob Storage) and pass it back to the Bot
+      
+                payslipList.push({
+                  "title": doc.Period,
+                  "subtitle": doc.Year,
+                  "buttons": [
+                    {
+                      "title": "View Payslip",
+                      "type": "web_url",
+                      "value": doc.Filename
+                    }
+                  ]
+                });
+      
+      
+            } else {
+              console.log("LOGGIT >>> Doc is null");
+            }
+      
           });
+      
+          client.close();
+        });
 
+        callback(null, 'one');
+    },
+    function(callback) {
+        // do some more stuff ...
 
-      } else {
-        console.log("LOGGIT >>> Doc is null");
-      }
+        console.log("LOGGIT >>> Response sent as : " + JSON.stringify(payslipList));
+        res.send({
+          replies:
+          [
+            {
+              type: 'List',
+              content: { elements: payslipList }
+            }
+          ]
+        });
 
-    });
+        callback(null, 'two');
+    }
+],
+// optional callback
+function(err, results) {
+    // results is now equal to ['one', 'two']
+    console.log("LOGGIT >>> Error in Async");
 
-    client.close();
+});
 
-    
-    
-    
+  
 
-  });
+  
 
-  console.log("LOGGIT >>> Response sent as : " + JSON.stringify(payslipList));
-
-  res.send({
-    replies:
-    [
-      {
-        type: 'List',
-        content: { elements: payslipList }
-      }
-    ]
-  });
+  
 
   // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
 
