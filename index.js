@@ -193,7 +193,7 @@ app.post('/wflist',function(req,res){
 
 //Get a list of my documents
 app.post('/payslip',function(req,res){            
-
+  var payslipList = [];
   var mongoClient = require("mongodb").MongoClient;
   mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
 
@@ -205,6 +205,22 @@ app.post('/payslip',function(req,res){
       
       if (doc != null) {
           console.log("LOGGIT >>> " + JSON.stringify(doc));
+
+          //We have the record, now we can get the Filename (URL to Blob Storage) and pass it back to the Bot
+
+          payslipList.push({
+            "title": doc.Period,
+            "subtitle": doc.Year,
+            "buttons": [
+              {
+                "title": "View Payslip",
+                "type": "web_url",
+                "value": doc.Filename
+              }
+            ]
+          });
+
+
       } else {
         console.log("LOGGIT >>> Doc is null");
       }
@@ -212,13 +228,13 @@ app.post('/payslip',function(req,res){
 
 
     client.close();
-    console.log("LOGGIT >>> Mongo connected ok...");
+    
     res.send({
       replies:
       [
         {
-          type: 'text',
-          content: "Your payslips have been found"
+          type: 'List',
+          content: { elements: payslipList }
         }
       ]
     });
