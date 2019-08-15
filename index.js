@@ -194,8 +194,7 @@ app.post('/wflist',function(req,res){
 
 });
 
-
-//Get a list of my documents
+//Get a list of my payslip documents
 app.post('/payslip',function(req,res){            
 
 
