@@ -6,7 +6,7 @@ const axios = require('axios');
 const config = require('./config.js');
 var   Redis = require('ioredis');
 
-
+var mongoClient = require("mongodb").MongoClient;
 
 
 //SAP OData Service Utilities
@@ -194,71 +194,89 @@ app.post('/wflist',function(req,res){
 
 //Get a list of my documents
 app.post('/payslip',function(req,res){            
-  
-  var mongoClient = require("mongodb").MongoClient;
 
-
-  mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
-
-
-    const db = client.db(config.MONGO_DB_NAME);
-    var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094"});
-    
-    //---------
-    
 
     action1 = new Promise((resolve,reject) => {
-      var payslipList = [];
-      cursor.each(function(err, doc) {
-        console.log("LOGGIT >>> Cursor hit");
+      setTimeout(function() {
+        mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
+
+
+          const db = client.db(config.MONGO_DB_NAME);
+          var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094"});
+
+          var payslipList = [];
+          cursor.each(function(err, doc) {
+            console.log("LOGGIT >>> Cursor hit");
+            
+            if (doc != null) {
+                console.log("LOGGIT >>> " + JSON.stringify(doc));
         
-        if (doc != null) {
-            console.log("LOGGIT >>> " + JSON.stringify(doc));
-    
-            //We have the record, now we can get the Filename (URL to Blob Storage) and pass it back to the Bot
-    
-            payslipList.push({
-              "title": doc.Period,
-              "subtitle": doc.Year,
-              "buttons": [
-                {
-                  "title": "View Payslip",
-                  "type": "web_url",
-                  "value": doc.Filename
-                }
-              ]
-            });
-    
-        } else {
-          console.log("LOGGIT >>> Doc is null");
-        }
-    
-      });
-      resolve(payslipList);
+                //We have the record, now we can get the Filename (URL to Blob Storage) and pass it back to the Bot
+        
+                payslipList.push({
+                  "title": doc.Period,
+                  "subtitle": doc.Year,
+                  "buttons": [
+                    {
+                      "title": "View Payslip",
+                      "type": "web_url",
+                      "value": doc.Filename
+                    }
+                  ]
+                });
+                resolve(payslipList);
+        
+            } else {
+              console.log("LOGGIT >>> Doc is null");
+            }
+        
+          });
+          client.close();
+
+          
+        })
+
+        
+      }, 300);
+
     });
 
-    var action2 = (results) => {
-      console.log("LOGGIT >>> Response sent as : " + JSON.stringify(results));
+    console.log(action1.then(function(payslips){
+      console.log("LOGGIT >>> Response sent as : " + JSON.stringify(payslips));
       res.send({
         replies:
         [
           {
             type: 'List',
-            content: { elements: results }
+            content: { elements: payslips }
           }
         ]
       });
-    }
+    }));
+
+    // var action2 = (results) => {
+    //   console.log("LOGGIT >>> Response sent as : " + JSON.stringify(results));
+    //   res.send({
+    //     replies:
+    //     [
+    //       {
+    //         type: 'List',
+    //         content: { elements: results }
+    //       }
+    //     ]
+    //   });
+    // }
       
 
-    Promise.all([action1]).then(action2);
+    // Promise.all([action1]).then(action2);
 
+    
     //---------
 
     
 
-    client.close();
-  });
+
+
   
 
   // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
