@@ -200,9 +200,8 @@ app.post('/payslip',function(req,res){
 
     action1 = new Promise((resolve,reject) => {
       setTimeout(function() {
-        mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
-
-
+        
+        mongoClient.connect(process.env.MONGO_URL, function (err, client) {
           const db = client.db(config.MONGO_DB_NAME);
           var cursor = db.collection(config.MONGO_COLLECTION).find({Employee:"82094"});
 
