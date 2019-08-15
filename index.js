@@ -24,6 +24,9 @@ app.get('/',function(req,res){
 app.get('/img/call_low.jpg',function(req,res){
   res.sendFile(path.join(__dirname+'/img/call_low.jpg'));
 });
+app.get('/img/payslip.png',function(req,res){
+  res.sendFile(path.join(__dirname+'/img/payslip.png'));
+});
 
 function pad(num, size) {
     var s = "0000000000" + num;
@@ -215,6 +218,7 @@ app.post('/payslip',function(req,res){
         
                 payslipList.push({
                   "title": doc.Period,
+                  "imageUrl": "./img/payslip.png",
                   "subtitle": doc.Year,
                   "buttons": [
                     {
