@@ -15,7 +15,8 @@
     "express": "^4.17.1",
     "http": "0.0.0",
     "ioredis": "^4.11.2",
-    "mongodb": "^3.3.0-beta2"
+    "mongodb": "^3.3.0-beta2",
+    "sync": "^0.2.5"
   },
   "engines": {
     "node": "11.14.x"
