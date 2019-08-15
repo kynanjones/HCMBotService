@@ -247,7 +247,7 @@ app.post('/payslip',function(req,res){
         replies:
         [
           {
-            type: 'List',
+            type: 'list',
             content: { elements: payslips }
           }
         ]
