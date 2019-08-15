@@ -198,7 +198,7 @@ app.post('/wflist',function(req,res){
 app.post('/payslip',function(req,res){            
 
 
-    action1 = new Promise((resolve,reject) => {
+    readPayslipReference = new Promise((resolve,reject) => {
       setTimeout(function() {
         mongoClient.connect(config.MONGO_CONN_STRING, function (err, client) {
 
@@ -234,16 +234,12 @@ app.post('/payslip',function(req,res){
         
           });
           client.close();
-
-          
         })
-
-        
       }, 300);
 
     });
 
-    console.log(action1.then(function(payslips){
+    console.log(readPayslipReference.then(function(payslips){
       console.log("LOGGIT >>> Response sent as : " + JSON.stringify(payslips));
       res.send({
         replies:
@@ -255,38 +251,6 @@ app.post('/payslip',function(req,res){
         ]
       });
     }));
-
-    // var action2 = (results) => {
-    //   console.log("LOGGIT >>> Response sent as : " + JSON.stringify(results));
-    //   res.send({
-    //     replies:
-    //     [
-    //       {
-    //         type: 'List',
-    //         content: { elements: results }
-    //       }
-    //     ]
-    //   });
-    // }
-      
-
-    // Promise.all([action1]).then(action2);
-
-    
-    //---------
-
-    
-
-
-
-  
-
-  // redis = new Redis(6379, "ec2-52-62-74-49.ap-southeast-2.compute.amazonaws.com");
-
-  // redis.get("myScript", function(err, result) {
-  //   console.log(result);
-  // });
-
 });
 
 app.post('/createleave',function(req,res){
