@@ -97,7 +97,7 @@ app.post('/wflist',function(req,res){
   axios.get(SF_WF_URL,{headers: {"Authorization" : "Basic " + auth}})
     .then(response => {
       console.log("LOGGIT >>> Response returned without error");
-      console.log("LOGGIT >>> " + JSON.stringify(response));
+      //console.log("LOGGIT >>> " + JSON.stringify(response));
       for (var i in response.data.d.results) {
 
         console.log("LOGGIT >>> " + "WfRequest found");
