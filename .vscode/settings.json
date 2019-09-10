@@ -3,5 +3,6 @@
         ".vscode{,/**}"
     ],
    
-    "appService.deploySubpath": ""
+    "appService.deploySubpath": "",
+    "appService.defaultWebAppToDeploy": "/subscriptions/36e833bf-efff-45b2-adb2-656c89dc147e/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/HCMServiceBot"
 }
