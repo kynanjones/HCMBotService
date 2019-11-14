@@ -1,0 +1,19 @@
+{
+	"hostname": "10.11.241.14",
+	"ports": {
+		"27017/tcp": "52759",
+		"28017/tcp": "37422"
+	},
+	"port": "52759",
+	"username": "AxheNz-wc39m3mi1",
+	"password": "vuxs62hfePwL-sw1",
+	"dbname": "XXCGTLY74f15bFJR",
+	"uri": "mongodb://AxheNz-wc39m3mi1:vuxs62hfePwL-sw1@10.11.241.14:52759/XXCGTLY74f15bFJR",
+	"end_points": [
+		{
+			"network_id": "SF",
+			"host": "10.11.241.14",
+			"port": "52759"
+		}
+	]
+}

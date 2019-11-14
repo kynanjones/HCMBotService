@@ -4,7 +4,7 @@ module.exports = {
   PASSWORD: "transform",
   SFSF_URL: "https://apisalesdemo2.successfactors.eu/odata/v2/",
   LEAVE_ACCOUNT_TYPE: "TAT_VAC_REC",
-  MONGO_CONN_STRING: "mongodb://kynanjones-db:IPgBgskM3ITpTRgSDQuugGuZGvXZdgA9gR2934aN1sXc1BOz0qj8yZye3yHG8VUWAUOG9pbY28hiAVPi1JZBnQ%3D%3D@kynanjones-db.documents.azure.com:10255/?ssl=true",
-  MONGO_DB_NAME: "HCM",
+  MONGO_CONN_STRING: "mongodb://AxheNz-wc39m3mi1:vuxs62hfePwL-sw1@10.11.241.14:52759/XXCGTLY74f15bFJR",
+  MONGO_DB_NAME: "XXCGTLY74f15bFJR",
   MONGO_COLLECTION: "Payslips"
 };
