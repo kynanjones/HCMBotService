@@ -10,9 +10,11 @@ Deploy your node service and acess the home.html page to call the webchat window
 
 <h3>/leave</h3>
 <b>Get Leave Balance</b>
+Calls SuccessFactors APIs to get the leave balance for given employee number (82094).
 
 <h3>/wflist</h3>
-<b>Get list of SuccessFactors workflow tasks</b>
+<b>Workflow tasks</b>
+Get list of SuccessFactors workflow tasks. Ugly nested code, but I didn't have the time to do it properly. 
 
 <h3>/mongodb</h3>
 <b>Internal, not called by SAP CAI.</b> 
